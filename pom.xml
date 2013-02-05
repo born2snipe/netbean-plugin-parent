@@ -1,90 +1,157 @@
-<project xmlns='http://maven.apache.org/POM/4.0.0' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xsi:schemaLocation='http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd'>
+<project xmlns='http://maven.apache.org/POM/4.0.0' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'
+         xsi:schemaLocation='http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd'>
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>b2s</groupId>
     <artifactId>netbean-plugin-parent</artifactId>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
     <version>0.1-SNAPSHOT</version>
     <name>netbean-plugin-parent</name>
-   
-    
-<scm>
-  <developerConnection>scm:git:git://github.com/born2snipe/netbean-plugin-parent.git</developerConnection>
-</scm>
 
- 
-    <dependencies>
-    
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
-            <version>1.7</version>
-            <scope>test</scope>
-        </dependency>
 
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.5</version>
-            <scope>test</scope>
-        </dependency>
-        
-        
-        
-    </dependencies>
+    <scm>
+        <developerConnection>scm:git:git://github.com/born2snipe/netbean-plugin-parent.git</developerConnection>
+    </scm>
+
+    <properties>
+        <keystore>${project.build.outputDirectory}/keystore</keystore>
+    </properties>
 
     <build>
-     <plugins>
+        <plugins>
 
-      <plugin>
-       <groupId>org.apache.maven.plugins</groupId>
-       <artifactId>maven-compiler-plugin</artifactId>
-       <version>2.3.2</version>       
-       <configuration>
-        <source>1.6</source>
-        <target>1.6</target>
-       </configuration>
-      </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>2.3.2</version>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
 
-      <plugin>
-       <groupId>org.apache.maven.plugins</groupId>
-       <artifactId>maven-surefire-plugin</artifactId>
-       <version>2.6</version>
-       <configuration>
-        <parallel>classes</parallel>
-       </configuration>
-      </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <parallel>classes</parallel>
+                </configuration>
+            </plugin>
 
-      
-      
-      
-      
-      
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-release-plugin</artifactId>
-                <version>2.0</version>
+                <version>2.0-beta-8</version>
                 <configuration>
                     <autoVersionSubmodules>true</autoVersionSubmodules>
                 </configuration>
             </plugin>
 
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>keytool-maven-plugin</artifactId>
+                <version>1.2</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generateKeyPair</goal>
+                        </goals>
+                        <phase>generate-resources</phase>
+                    </execution>
+                </executions>
+                <configuration>
+                    <keystore>${keystore}</keystore>
+                    <storepass>${project.artifactId}</storepass>
+                    <keypass>${project.artifactId}</keypass>
+                    <alias>${project.artifactId}</alias>
+                    <dname>cn=${project.scm.developerConnection}, ou=None, L=Des Moines, ST=Iowa, o=${project.artifactId}, c=US</dname>
+                    <sigalg>SHA1withDSA</sigalg>
+                    <ext></ext>
+                    <validity>100</validity>
+                    <keyalg>DSA</keyalg>
+                    <keysize>1024</keysize>
+                </configuration>
+            </plugin>
 
-      
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>nbm-maven-plugin</artifactId>
+                <version>3.2</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <verifyRuntime>skip</verifyRuntime>
+                    <keystore>${keystore}</keystore>
+                    <keystorealias>${project.artifactId}</keystorealias>
+                    <keystorepassword>${project.artifactId}</keystorepassword>
+                </configuration>
+            </plugin>
 
-     </plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.2</version>
+                <configuration>
+                    <!-- to have the jar plugin pickup the nbm generated manifest -->
+                    <useDefaultManifestFile>true</useDefaultManifestFile>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>com.mycila.maven-license-plugin</groupId>
+                <artifactId>maven-license-plugin</artifactId>
+                <version>1.5.0</version>
+                <configuration>
+                    <basedir>${basedir}</basedir>
+                    <header>${basedir}/LICENSE.txt</header>
+                    <quiet>false</quiet>
+                    <failIfMissing>true</failIfMissing>
+                    <aggregate>false</aggregate>
+                    <includes>
+                        <include>src/**</include>
+                        <include>**/test/**</include>
+                    </includes>
+                    <excludes>
+                        <exclude>**/test/resources/**</exclude>
+                    </excludes>
+                    <useDefaultExcludes>true</useDefaultExcludes>
+                    <useDefaultMapping>true</useDefaultMapping>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>process-resources</phase>
+                        <goals>
+                            <goal>format</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+
+        </plugins>
     </build>
 
-  <pluginRepositories>
+    <pluginRepositories>
 
-    
 
-  </pluginRepositories>
+    </pluginRepositories>
 
-  <repositories>
- 
-    
+    <repositories>
+        <!-- this is a remote repository hosting the netbeans api artifacts.
+         the versions of the artifacts are netbeans IDE release based, eg. RELEASE65.
+         You might want to use your own repository. To create one, use the nbm:populate-repository goal.
+          -->
+        <repository>
+            <id>netbeans</id>
+            <name>repository hosting netbeans.org api artifacts</name>
+            <url>http://bits.netbeans.org/maven2</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
 
-  </repositories>
 </project>
 
