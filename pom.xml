@@ -7,6 +7,9 @@
     <version>0.2-SNAPSHOT</version>
     <name>netbean-plugin-parent</name>
 
+    <organization>
+        <name>Dan Dudley</name>
+    </organization>
 
     <scm>
         <developerConnection>scm:git:git://github.com/born2snipe/netbean-plugin-parent.git</developerConnection>
