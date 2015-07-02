@@ -1,10 +1,11 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>b2s</groupId>
     <artifactId>netbean-plugin-parent</artifactId>
     <packaging>pom</packaging>
-    <version>0.6</version>
+    <version>0.6-SNAPSHOT</version>
     <name>netbean-plugin-parent</name>
 
     <organization>
@@ -152,7 +153,7 @@
                             <alias>${project.artifactId}</alias>
                             <dname>cn=${project.scm.developerConnection}, ou=None, L=Des Moines, ST=Iowa, o=${project.artifactId}, c=US</dname>
                             <sigalg>SHA1withDSA</sigalg>
-                            <ext />
+                            <ext/>
                             <validity>2000</validity>
                             <keyalg>DSA</keyalg>
                             <keysize>1024</keysize>
