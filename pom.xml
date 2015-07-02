@@ -4,17 +4,26 @@
     <groupId>b2s</groupId>
     <artifactId>netbean-plugin-parent</artifactId>
     <packaging>pom</packaging>
-    <version>0.6</version>
+    <version>0.7-SNAPSHOT</version>
     <name>netbean-plugin-parent</name>
 
     <organization>
         <name>Dan Dudley</name>
     </organization>
 
+    <developers>
+        <developer>
+            <name>Dan Dudley</name>
+            <email>born2snipe@gmail.com</email>
+            <organization />
+            <organizationUrl>https://github.com/born2snipe</organizationUrl>
+        </developer>
+    </developers>
+
     <scm>
-        <developerConnection>scm:git:git://github.com/born2snipe/netbean-plugin-parent.git</developerConnection>
         <connection>scm:git:git@github.com:born2snipe/netbean-plugin-parent.git</connection>
         <url>git@github.com:born2snipe/netbean-plugin-parent.git</url>
+        <developerConnection>scm:git:git@github.com:born2snipe/netbean-plugin-parent.git</developerConnection>
     </scm>
 
     <properties>
@@ -24,19 +33,6 @@
 
     <build>
         <plugins>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-release-plugin</artifactId>
-                <version>2.1</version>
-                <configuration>
-                    <autoVersionSubmodules>true</autoVersionSubmodules>
-                    <mavenExecutorId>forked-path</mavenExecutorId>
-                    <useReleaseProfile>false</useReleaseProfile>
-                    <arguments>-Prelease-nbm</arguments>
-                </configuration>
-            </plugin>
-
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -108,25 +104,24 @@
                     </execution>
                 </executions>
             </plugin>
-
-
         </plugins>
-    </build>
 
-    <repositories>
-        <!-- this is a remote repository hosting the netbeans api artifacts.
-         the versions of the artifacts are netbeans IDE release based, eg. RELEASE65.
-         You might want to use your own repository. To create one, use the nbm:populate-repository goal.
-          -->
-        <repository>
-            <id>netbeans</id>
-            <name>repository hosting netbeans.org api artifacts</name>
-            <url>http://bits.netbeans.org/maven2</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-release-plugin</artifactId>
+                    <version>2.5.2</version>
+                    <configuration>
+                        <tagNameFormat>@{project.version}</tagNameFormat>
+                        <mavenExecutorId>forked-path</mavenExecutorId>
+                        <useReleaseProfile>false</useReleaseProfile>
+                        <arguments>-Prelease-nbm</arguments>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
 
     <profiles>
         <profile>
@@ -162,6 +157,15 @@
             </build>
         </profile>
     </profiles>
+
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+            <comments>A business-friendly OSS license</comments>
+        </license>
+    </licenses>
 
 </project>
 
