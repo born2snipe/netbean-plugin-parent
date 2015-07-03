@@ -4,7 +4,7 @@
     <groupId>b2s</groupId>
     <artifactId>netbean-plugin-parent</artifactId>
     <packaging>pom</packaging>
-    <version>0.7</version>
+    <version>0.8-SNAPSHOT</version>
     <name>netbean-plugin-parent</name>
 
     <organization>
@@ -24,7 +24,7 @@
         <connection>scm:git:git@github.com:born2snipe/netbean-plugin-parent.git</connection>
         <url>git@github.com:born2snipe/netbean-plugin-parent.git</url>
         <developerConnection>scm:git:git@github.com:born2snipe/netbean-plugin-parent.git</developerConnection>
-      <tag>0.7</tag>
+      <tag>HEAD</tag>
   </scm>
 
     <properties>
